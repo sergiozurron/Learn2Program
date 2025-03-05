@@ -1,0 +1,44 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #dfdede; 
+    color: #555555; 
+    margin: 0;
+    padding: 0;
+}
+header {
+    background-color: #1f1f1f;
+    color: #e0e0e0;
+    text-align: center;
+    padding: 1rem;
+}
+header img {
+    width: 150px; 
+    height: auto;
+    display: block;
+    margin: 0 auto; /* Para centrar el logo */
+}
+main {
+    padding: 20px;
+    margin: 20px;
+}
+h1 {
+    font-size: 28px;
+}
+h2 {
+    font-size: 22px;
+    margin-top: 20px;
+    color: #232721; 
+}
+p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+footer {
+    background-color: #1f1f1f;
+    color: #e0e0e0;
+    text-align: center;
+    padding: 1rem;
+    position: absolute;
+    bottom: 0;
+    width: 100%; 
+}
