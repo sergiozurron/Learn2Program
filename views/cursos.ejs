@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursos</title>
+    <!-- link a bootstrap-->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+   
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4 text-center">[ Lista de Cursos ]</h1>
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered table-custom">
+                <thead class="bg-dark text-center text-white">
+                    <tr>
+                        <th>ID Teoría</th>
+                        <th>Título</th>
+                        <th>Teoría</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% cursos.forEach(function(curso) { %>
+                        <tr>
+                            <td><%= curso.idteoria %></td>
+                            <td><%= curso.titulo %></td>
+                            <td><%= curso.teoria %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Script de Bootstrap -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
