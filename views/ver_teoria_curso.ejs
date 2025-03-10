@@ -19,16 +19,22 @@
         <div class="container contenedor-principal mt-5">
             <h1 class="mb-4 text-center text-primary"><%= curso.nombreCurso %></h1>
             <div class="container">
-                <% temas.forEach(function(tema) { %>
-                    <div class="card mb-3">
-                        <div class="card-header">
-                            <h5 class="card-title"><%= tema.nombreTema %></h5>
+                <div class="accordion" id="accordionTemas">
+                    <% temas.forEach(function(tema, index) { %>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading<%= index %>">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= index %>" aria-expanded="true" aria-controls="collapse<%= index %>">
+                                    <%= tema.nombreTema %>
+                                </button>
+                            </h2>
+                            <div id="collapse<%= index %>" class="accordion-collapse collapse" aria-labelledby="heading<%= index %>" data-bs-parent="#accordionTemas">
+                                <div class="accordion-body">
+                                    <p class="card-text"><%= tema.contenidoTema %></p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <p class="card-text"><%= tema.descripcionTema %></p>
-                        </div>
-                    </div>
-                <% }); %>
+                    <% }); %>
+                </div>
             </div>
         </div>
     </main>

@@ -14,7 +14,6 @@ app.set('views', path.join(__dirname, 'views'));
 // sirve para que en tiempo de ejecución el servidor sepa acceder a la carpeta public para imagenes, etc
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 // Ruta principal (de momento se quedará así para la primera historia de usuario)
 app.get('/', (req, res) => {
   const query1 = 'SELECT * FROM Cursos';
