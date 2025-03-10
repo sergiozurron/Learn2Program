@@ -5,7 +5,7 @@ const path = require('path');
 const pool = require('./database');
 
 const app = express();
-const port = 80; 
+const port = 3000; // Cambiarlo al puerto 80 para subirlo al servidor y 3000 para correrlo en local
 
 // Configuración para que el servidor sepa redirigir correctamente a las plantillas
 app.set('view engine', 'ejs'); 
