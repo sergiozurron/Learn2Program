@@ -9,37 +9,29 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/ver_teoria_curso.css"> <!--enlace al archivo css-->
 
-   
 </head>
 <body>
     <!--header-->
     <%- include('header') %>
-
-    <!--body-->
-    <div class="container contenedor-principal mt-5">
-        <h1 class="mb-4 text-center text-primary">Lista de Cursos</h1>
-        <div class="table-responsive">
-            <table class="table table-hover table-bordered table-striped">
-                <thead class="thead-dark text-center">
-                    <tr>
-                        <th>ID Teoría</th>
-                        <th>Título</th>
-                        <th>Teoría</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% cursos.forEach(function(curso) { %>
-                        <tr>
-                            <td class="text-center"><%= curso.idteoria %></td>
-                            <td><%= curso.titulo %></td>
-                            <td><%= curso.teoria %></td>
-                        </tr>
-                    <% }); %>
-                </tbody>
-            </table>
-        </div>
-    </div>
     
+
+    <main class="contenido">
+        <div class="container contenedor-principal mt-5">
+            <h1 class="mb-4 text-center text-primary"><%= curso.nombreCurso %></h1>
+            <div class="container">
+                <% temas.forEach(function(tema) { %>
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h5 class="card-title"><%= tema.nombreTema %></h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"><%= tema.descripcionTema %></p>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        </div>
+    </main>
         
     <!--footer-->
     <%- include('footer') %>
