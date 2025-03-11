@@ -29,13 +29,13 @@ app.get('/', (req, res) => {
 
      // Obtener los temas del curso usando el idCurso
      const query2 = 'SELECT * FROM Temas WHERE idCurso = ?';
-     pool.query(query2, [curso.idCurso], (err, temas) => {
+     pool.query(query2, [curso.id], (err, temas) => {
         if (err) {
          res.status(500).send('Error al obtener los temas: ' + err.message);
          return;
         }
 
-        res.render('ver_teoria_curso', { curso: curso, temas: temas});
+        res.render('index', { curso: curso, temas: temas});
      });
   });
 }); 
