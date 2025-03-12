@@ -10,7 +10,7 @@
     <%- include('header') %>
 
     <main>
-        <% if (temas && temas.length == 0) { %>
+        <% if (temas && temas.length > 0) { %>
             <%- include('ver-teoria-curso') %>
         <% } else { %>
             <!-- si no hay teoria disponible, se muestra un mensaje de alerta -->
