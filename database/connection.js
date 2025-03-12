@@ -3,10 +3,10 @@ const mysql = require('mysql');
 
 // Configuración del pool de conexiones
 const pool = mysql.createPool({
-    host: "68.221.168.158",    
-    user: "agilemasters",         
-    password: "AgileMasters_",        
-    database: "learn2program"
+    host: process.env.DBHOST,    
+    user: process.env.DBUSER,         
+    password: process.env.DBPASSWORD,        
+    database: process.env.DBNAME
 });
 
 module.exports = pool;

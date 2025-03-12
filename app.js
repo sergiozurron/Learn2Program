@@ -1,3 +1,4 @@
+require('dotenv').config();
 // Importar dependencias
 const express = require('express');
 const sql = require('mysql');
