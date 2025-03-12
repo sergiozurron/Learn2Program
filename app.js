@@ -1,30 +1,47 @@
+require('dotenv').config();
 // Importar dependencias
 const express = require('express');
 const sql = require('mysql');
 const path = require('path');
-const pool = require('./database');
+const pool = require('./database/connection');
 
 const app = express();
-const port = 3000; // Cambiarlo al puerto 80 para subirlo al servidor y 3000 para correrlo en local
+const port = 3000;
 
 // Configuración para que el servidor sepa redirigir correctamente a las plantillas
-app.set('view engine', 'ejs'); 
+app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-app.get('/', (req, res) => {  
+// sirve para que en tiempo de ejecución el servidor sepa acceder a la carpeta public para imagenes, etc
+app.use(express.static(path.join(__dirname, 'public')));
 
-  const query = 'SELECT * FROM TeoriaCursos';
-
-  pool.query(query, (err, results) => {
+// Ruta principal (de momento se quedará así para la primera historia de usuario)
+app.get('/', (req, res) => {
+  const query1 = 'SELECT * FROM Cursos';
+  pool.query(query1, (err, cursos) => {
     if (err) {
       res.status(500).send('Error al obtener los datos: ' + err.message);
       return;
     }
-    res.render('cursos', { cursos: results });
-  });
-});
 
-// Iniciar el servidor en el puerto 80
+    // Seleccionamos el primer curso de la lista ya que solo
+    // hay uno para la primera historia de usuario
+    var curso = cursos[0]; 
+
+     // Obtener los temas del curso usando el idCurso
+     const query2 = 'SELECT * FROM Temas WHERE idCurso = ?';
+     pool.query(query2, [curso.id], (err, temas) => {
+        if (err) {
+         res.status(500).send('Error al obtener los temas: ' + err.message);
+         return;
+        }
+
+        res.render('index', { curso: curso, temas: temas});
+     });
+  });
+}); 
+
+// Iniciar el servidor en el puerto
 app.listen(port, () => {
   console.log(`Servidor escuchando en http://localhost:${port}`);
 });

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursos</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" href="/css/ver-teoria-curso.css">
+    <style>
+    
+    .accordion-item {
+         margin-bottom: 20px; /* Margen que hay entre cada uno de los temas */
+         border: none; /* Eliminamos el borde que sino se lia con el "boton" de cada tema */
+    }
+
+/* Asegurarse de que el accordion-header cubra todo el fondo y no deje espacio */
+.accordion-header {
+    background-color: transparent; /* Transaparente para que no influya con el button */
+    cursor: pointer;
+    text-align: left; /* Alinea el texto del header para que empiece a la izquierda */
+    font-size: 1.2em; /* Tamaño de la fuente */
+}
+
+
+/* Fondo y borde consistente para el botón de acordeón */
+.accordion-button {
+    background-color: rgb(19, 45, 54) !important; /* Azul uniforme para el fondo */
+    border: 1px solid #ffffff !important; /* Borde azul */
+    color: white !important; /* Texto blanco */
+    padding: 0.75rem 1.25rem; /* Ajustar padding */
+    
+    margin: 0; /* Eliminar cualquier margen */
+    box-sizing: border-box; /* Asegura que el ancho incluya bordes y rellenos */
+    border-radius: 0; /* Eliminar borde redondeado si quieres bordes rectos */
+    height: 70px; /* Establece una altura fija para el botón */
+    
+}
+
+/* Fondo y borde consistente cuando el acordeón está abierto */
+.accordion-button:not(.collapsed) {
+    background-color: rgba(19, 45, 54, 0.555) !important; /* Azul oscuro pero más transparente para que cuando se haga el hover se vea el cambio de color */
+    box-sizing: border-box;
+    border-radius: 0; /* Eliminar borde redondeado si no quieres bordes redondeados */
+   
+}
+
+/* Cambia el color del botón (cuadro del titulo de cada tema) cuando el ratón pasa por encima */
+.accordion-button:hover {
+    background-color: rgb(19, 45, 54) !important; /* Azul más oscuro, como el footer y header */  
+    font-size: 1.10rem; /* Aumenta el tamaño de letra un poco */
+    transform: scale(1.01); /* Aumenta la escala del recuadro de cada tema*/
+}
+
+
+/* Flecha */
+.accordion-icon {
+    font-size: 1.5em;
+    margin-right: 10px;
+    transition: transform 0.3s ease;
+}
+
+/* Contenido del acordeón oculto por defecto */
+.accordion-content {
+    display: none;
+    padding: 10px;
+    background-color: #fafafa;
+    border-top: 1px solid #ddd;
+    transition: max-height 0.5s ease;
+    overflow: hidden;
+    max-height: 0;
+}
+
+        .accordion-content.show {
+             display: block;
+             max-height: 5000px; /* Esta es la altura máxima del body que se despliega de cada tema, se puede aumentar si hace falta más, pero no creo */
+        }
+
+ 
+    </style>
+    
+</head>
+<body>
+
+    <main class="contenido">
+        <div class="container contenedor-principal mt-5">
+            <h1 class="mb-4 text-center text-primary"><%= curso.nombre %></h1>
+            <div class="container">
+                <div class="accordion">
+                    <% temas.forEach(function(tema, index) { %>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" onclick="toggleAccordion('<%= index %>')">
+                                    
+                                    <%= tema.titulo %>
+                                </button>
+                            </h2>
+                            <div id="content-<%= index %>" class="accordion-content">
+                                <p class="card-text"><%= tema.contenido %></p>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Función para abrir y cerrar el contenido del acordeón
+      // Función para abrir y cerrar el contenido del acordeón
+function toggleAccordion(index) {
+    var content = document.getElementById('content-' + index);
+    var button = content.previousElementSibling.querySelector('.accordion-button');
+    var header = content.previousElementSibling;  // El encabezado del acordeón (accordion-header)
+
+    // Si el contenido está oculto, lo mostramos; si está visible, lo ocultamos
+    if (content.style.display === "block") {
+        content.style.display = "none";
+        content.classList.remove('show');
+        button.classList.remove('active');
+        header.classList.remove('active');  // También quitamos la clase 'active' del encabezado
+    } else {
+        content.style.display = "block";
+        content.classList.add('show');
+        button.classList.add('active');
+        header.classList.add('active');  // Añadimos la clase 'active' al encabezado
+    }
+}
+
+    </script>
+    
+</body>
+</html>
