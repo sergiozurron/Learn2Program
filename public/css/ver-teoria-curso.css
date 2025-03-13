@@ -3,3 +3,72 @@
 
 }
 
+    
+    .accordion-item {
+         margin-bottom: 20px; /* Margen que hay entre cada uno de los temas */
+         border: none; /* Eliminamos el borde que sino se lia con el "boton" de cada tema */
+    }
+
+/* Asegurarse de que el accordion-header cubra todo el fondo y no deje espacio */
+.accordion-header {
+    background-color: transparent; /* Transaparente para que no influya con el button */
+    cursor: pointer;
+    text-align: left; /* Alinea el texto del header para que empiece a la izquierda */
+    font-size: 1.2em; /* Tamaño de la fuente */
+}
+
+
+/* Fondo y borde consistente para el botón de acordeón */
+.accordion-button {
+    background-color: rgb(19, 45, 54) !important; /* Azul uniforme para el fondo */
+    border: 1px solid #ffffff !important; /* Borde azul */
+    color: white !important; /* Texto blanco */
+    padding: 0.75rem 1.25rem; /* Ajustar padding */
+    
+    margin: 0; /* Eliminar cualquier margen */
+    box-sizing: border-box; /* Asegura que el ancho incluya bordes y rellenos */
+    border-radius: 0; /* Eliminar borde redondeado si quieres bordes rectos */
+    height: 70px; /* Establece una altura fija para el botón */
+    
+}
+
+/* Fondo y borde consistente cuando el acordeón está abierto */
+.accordion-button:not(.collapsed) {
+    background-color: rgba(19, 45, 54, 0.555) !important; /* Azul oscuro pero más transparente para que cuando se haga el hover se vea el cambio de color */
+    box-sizing: border-box;
+    border-radius: 0; /* Eliminar borde redondeado si no quieres bordes redondeados */
+   
+}
+
+/* Cambia el color del botón (cuadro del titulo de cada tema) cuando el ratón pasa por encima */
+.accordion-button:hover {
+    background-color: rgb(19, 45, 54) !important; /* Azul más oscuro, como el footer y header */  
+    font-size: 1.10rem; /* Aumenta el tamaño de letra un poco */
+    transform: scale(1.01); /* Aumenta la escala del recuadro de cada tema*/
+}
+
+
+/* Flecha */
+.accordion-icon {
+    font-size: 1.5em;
+    margin-right: 10px;
+    transition: transform 0.3s ease;
+}
+
+/* Contenido del acordeón oculto por defecto */
+.accordion-content {
+    display: none;
+    padding: 10px;
+    background-color: #fafafa;
+    border-top: 1px solid #ddd;
+    transition: max-height 0.5s ease;
+    overflow: hidden;
+    max-height: 0;
+}
+
+        .accordion-content.show {
+             display: block;
+             max-height: 5000px; /* Esta es la altura máxima del body que se despliega de cada tema, se puede aumentar si hace falta más, pero no creo */
+        }
+
+ 
