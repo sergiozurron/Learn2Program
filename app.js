@@ -17,9 +17,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Ruta principal (de momento se quedará así para la primera historia de usuario)
 app.get('/', (req, res) => {
+  console.log("GET /");
   const query1 = 'SELECT * FROM Cursos';
 
-  console.log("Entra aqui");
   pool.query(query1, (err, cursos) => {
     if (err) {
       res.status(500).send('Error al obtener los datos: ' + err.message);
@@ -38,6 +38,7 @@ app.get('/', (req, res) => {
          return;
         }
 
+        console.log("Carga de la página principal");
         res.render('ver-teoria-curso', { curso: curso, temas: temas});
      });
   });

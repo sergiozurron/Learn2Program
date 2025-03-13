@@ -11,32 +11,56 @@
 
     <link rel="stylesheet" href="/css/ver-teoria-curso.css">
     
-    
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
 </head>
 <body>
 
-    <div class="contenido">
-        <div class="container contenedor-principal mt-5">
-            <h1 class="mb-4 text-center text-primary"><%= curso.nombre %></h1>
-            <div class="container">
-                <div class="accordion">
-                    <% temas.forEach(function(tema, index) { %>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button" type="button" onclick="toggleAccordion('<%= index %>')">
-                                    
-                                    <%= tema.titulo %>
-                                </button>
-                            </h2>
-                            <div id="content-<%= index %>" class="accordion-content">
-                                <p class="card-text"><%= tema.contenido %></p>
+    <%- include('fragments/header') %>
+
+    <div class="accordion" id="accordionPanelsStayOpenExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+              Accordion Item #1
+            </button>
+          </h2>
+          <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+            <div class="accordion-body">
+              <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <% if (temas && temas.length > 0) { %>
+        <div class="container contenido">
+            <div class="container contenedor-principal mt-5">
+                <h1 class="mb-4 text-center text-primary"><%= curso.nombre %></h1>
+                <div class="container">
+                    <div class="accordion">
+                        <% temas.forEach(function(tema, index) { %>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" onclick="toggleAccordion('<%= index %>')">
+                                        
+                                        <%= tema.titulo %>
+                                    </button>
+                                </h2>
+                                <div id="content-<%= index %>" class="accordion-content">
+                                    <p class="card-text"><%= tema.contenido %></p>
+                                </div>
                             </div>
-                        </div>
-                    <% }); %>
+                        <% }); %>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    <% } else { %>
+        <!-- si no hay teoria disponible, se muestra un mensaje de alerta -->
+        <div class="alert alert-danger" role="alert">
+            La teoría no está disponible.
+        </div>
+    <% } %>
 
     <script>
                 // Función para abrir y cerrar el contenido del acordeón
@@ -61,6 +85,8 @@
         }
 
     </script>
+
+    <%- include('fragments/footer') %>
     
 </body>
 </html>
