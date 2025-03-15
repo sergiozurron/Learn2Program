@@ -10,6 +10,7 @@ on:
   pull_request: 
     branches:
       - main
+      
   workflow_dispatch:
  
 jobs:
@@ -67,9 +68,9 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [build, test]
+    needs: test
     environment:
-      name: 'Pre'
+      name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write # This is required for requesting the JWT
