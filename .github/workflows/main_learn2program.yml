@@ -4,9 +4,6 @@
 name: Build, Test and Deploy Node.js app to Azure Web App - Learn2Program
 
 on:
-  push:
-    branches:
-      - main
   pull_request: 
     branches:
       - main
