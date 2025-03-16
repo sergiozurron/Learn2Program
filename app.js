@@ -46,7 +46,7 @@ app.get('/', (req, res) => {
 // Iniciar el servidor en el puerto
 const server = app.listen(port, () => {
   const actualPort = server.address().port;
-  console.log(`Server is listening on port ${actualPort}`);
+  console.log(`Server is listening on http://localhost:${actualPort}`);
 });
 
 module.exports = app;
