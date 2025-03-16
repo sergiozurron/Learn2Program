@@ -31,13 +31,13 @@ describe("Pruebas en la página del curso", () => {
   test("Cada acordeón debe tener un botón y contenido oculto", () => {
     const acordeones = document.querySelectorAll(".accordion-item");
 
-    acordeones.forEach((acordeon, index) => {
-      const boton = acordeon.querySelector(".accordion-button");
-      const contenido = acordeon.querySelector(".accordion-content");
+    acordeones.forEach((acordeon) => {
+        const boton = acordeon.querySelector(".accordion-button");
+        const contenido = acordeon.querySelector(".accordion-content");
 
-      expect(boton).not.toBeNull();
-      expect(contenido).not.toBeNull();
-      expect(contenido.style.display).toBe("none");
+        expect(boton).not.toBeNull();
+        expect(contenido).not.toBeNull();
+        expect(contenido.classList.contains("show")).toBe(false);
     });
   });
 
