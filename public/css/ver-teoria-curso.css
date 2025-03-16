@@ -212,3 +212,12 @@ a:hover {
     margin-top:2%;
     margin-bottom:2%;
 }
+
+@media (max-width: 800px) {
+    /* Contenido del acordeón oculto por defecto */
+    .accordion-content {
+        padding: 15px;
+        font-size:90%;
+    }
+}
+

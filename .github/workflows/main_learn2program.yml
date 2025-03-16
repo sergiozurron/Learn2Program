@@ -10,6 +10,10 @@ on:
       
   workflow_dispatch:
  
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -58,7 +62,7 @@ jobs:
 
       - name: Run tests
         run: |
-          npm test prueba
+          npm test
       
       - name: Clean up
         run: rm -rf release.zip
