@@ -19,6 +19,13 @@
     <link rel="stylesheet" href="/css/ver-teoria-curso.css">
     
     <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@2.4.0/dist/purify.min.js"></script>
+    <script>
+        var contenidoLimpiado = DOMPurify.sanitize(curso.contenido_html);
+        document.getElementById('contenido-curso').innerHTML = contenidoLimpiado;
+    </script>
+
 </head>
 <body>
 
@@ -53,7 +60,7 @@
                                  </button>
                             </h2>
                             <div id="content-<%= index %>" class="accordion-content">
-                                <p class="card-text"><%= tema.contenido %></p>
+                                <p class="card-text"><%- tema.contenido %></p>
                             </div>
                         </div>
                     <% }); %>

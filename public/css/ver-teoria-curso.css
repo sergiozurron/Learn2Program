@@ -69,7 +69,7 @@ html, body {
 .accordion-content {
     text-align: justify;
     display: none;
-    padding: 10px;
+    padding: 20px;
     background-color: #fafafa;
     border-top: 1px solid #ddd;
     transition: max-height 0.5s ease;
@@ -121,3 +121,94 @@ html, body {
     border-radius: 50%;             
 }
 
+/* Estilo general para el fondo y texto */
+pre {
+    background-color: #1e1e1e;  /* Fondo oscuro */
+    padding: 15px;
+    border-radius: 5px;
+    font-family: "Courier New", monospace;
+    color: #d4d4d4;  /* Texto blanco claro por defecto */
+    overflow-x: auto; /* Para permitir desplazamiento horizontal si el código es largo */
+    margin-bottom: 20px; /* Espacio entre los bloques de código */
+}
+
+/* Comentarios */
+.comentario {
+    color: #6a9955;  /* Verde */
+    font-style: italic; /* Cursiva para comentarios */
+}
+
+/* Palabras clave */
+.palabra_clave {
+    color: #569cd6;  /* Azul claro (para palabras clave como int, return, etc.) */
+}
+
+/* Cadenas de texto */
+.cadena {
+    color: #ce9178;  /* Naranja suave */
+}
+
+/* Números */
+.numero {
+    color: #b5cea8;  /* Verde claro */
+}
+
+/* Operadores */
+.operador {
+    color: #dcdcaa;  /* Amarillo */
+}
+
+/* Funciones */
+.funcion {
+    color: #dcdcaa;  /* Amarillo (para funciones como cout, main, etc.) */
+}
+
+/* Librerías */
+.libreria {
+    color: #ce9178;  /* Naranja (para <iostream>) */
+}
+
+/* Directiva #include y cout << */
+.incluir {
+    color: #a8a8a8;  /* Gris */
+}
+
+/* return en violeta */
+.return {
+    color: #c586c0;  /* Violeta */
+}
+
+/* Comandos de terminal */
+.comando {
+    color: #d4d4d4;  /* Gris claro para los comandos de la terminal */
+    font-weight: bold;  /* Hacer los comandos un poco más destacados */
+}
+
+/* Comentarios en comandos de terminal */
+.comando-comentario {
+    color: #6a9955;  /* Verde para los comentarios en los comandos */
+}
+
+/* Agregar más espaciado entre los elementos */
+h1, h2, p {
+    margin-bottom: 20px;
+}
+
+/* Mejorar la apariencia de los enlaces */
+a {
+    color: #569cd6;  /* Azul para enlaces */
+    text-decoration: none;  /* Quitar subrayado */
+}
+
+a:hover {
+    text-decoration: underline;  /* Subrayado al pasar el ratón */
+}
+
+/* Resaltar el bloque de código completo con borde oscuro */
+.bloque-codigo {
+    border: 1px solid #444;  /* Borde gris oscuro y delgado */
+    padding: 10px;
+    border-radius: 5px;
+    margin-top:2%;
+    margin-bottom:2%;
+}
