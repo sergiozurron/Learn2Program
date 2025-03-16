@@ -58,7 +58,7 @@ jobs:
 
       - name: Run tests
         run: |
-          npm test prueba
+          npm test
       
       - name: Clean up
         run: rm -rf release.zip
