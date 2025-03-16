@@ -8,7 +8,7 @@ describe("Pruebas en la página del curso", () => {
   let document;
 
   beforeAll(() => {
-    const html = fs.readFileSync(path.resolve(__dirname, "./curso.html"), "utf8");
+    const html = fs.readFileSync(path.resolve(__dirname, "../views/ver-teoria-curso.ejs"), "utf8");
     document = new DOMParser().parseFromString(html, "text/html");
   });
 
