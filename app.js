@@ -1,12 +1,11 @@
 require('dotenv').config();
 // Importar dependencias
 const express = require('express');
-const sql = require('mysql');
 const path = require('path');
 const pool = require('./database/connection');
 
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 0;
 
 // Configuración para que el servidor sepa redirigir correctamente a las plantillas
 app.set('view engine', 'ejs');
@@ -45,6 +44,9 @@ app.get('/', (req, res) => {
 }); 
 
 // Iniciar el servidor en el puerto
-app.listen(port, () => {
-  console.log(`Servidor escuchando en http://localhost:${port}`);
+const server = app.listen(port, () => {
+  const actualPort = server.address().port;
+  console.log(`Server is listening on http://localhost:${actualPort}`);
 });
+
+module.exports = app;
