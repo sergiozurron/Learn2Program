@@ -2,7 +2,7 @@ const app = require('../app');
 const request = require('supertest');
 const { StatusCodes } = require('http-status-codes');
 const MENSAJES = require('../utils/mensajes');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const Usuario = require('../modelos/Usuario');
 const Pregunta = require('../modelos/Pregunta');
 const IntentoTest = require('../modelos/IntentoTest');
@@ -220,11 +220,12 @@ describe('Prueba de integración de recordatorios', () => {
 
     test('Debe crear un nuevo recordatorio en la base de datos y renderizar la vista con éxito', async () => {
         const nuevoRecordatorio = new URLSearchParams({
-            fecha: '2025-10-01',
+            fecha: '2050-10-01',
             time: '14:00',
             email: 'test@email.com',
             mensaje: 'Este es un mensaje de prueba',
-            asunto: 'Asunto de prueba'
+            asunto: 'Asunto de prueba',
+            client_timezone: 'Europe/Madrid'
         });
 
         const response = await request(app)
@@ -242,7 +243,8 @@ describe('Prueba de integración de recordatorios', () => {
             time: '14:00',
             email: 'test@email.com',
             mensaje: 'Mensaje inválido',
-            asunto: 'Asunto inválido'
+            asunto: 'Asunto inválido',
+            client_timezone: 'Europe/Madrid'
         });
 
         const response = await request(app)
@@ -256,11 +258,12 @@ describe('Prueba de integración de recordatorios', () => {
 
     test('Debe rechazar un recordatorio si falta algún campo', async () => {
         const recordatorioIncompleto = new URLSearchParams({
-            fecha: '2025-04-01',
+            fecha: '2050-04-01',
             time: '14:00',
             email: '', // Falta el email
             mensaje: 'Mensaje de prueba',
-            asunto: 'Asunto de prueba'
+            asunto: 'Asunto de prueba',
+            client_timezone: 'Europe/Madrid'
         });
 
         const response = await request(app)
@@ -434,7 +437,7 @@ describe("POST /register", () => {
         const correoDuplicado = "duplicado@correo.com";
 
         // Creamos el usuario previamente (directamente en la BD con hash)
-        const bcrypt = require('bcrypt');
+        const bcrypt = require('bcryptjs');
         const Usuario = require('../modelos/Usuario');
         const contraseñaHasheada = await bcrypt.hash('Password123', 10); 
 

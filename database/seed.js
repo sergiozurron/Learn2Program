@@ -10,7 +10,7 @@ const IntentoTest = require('../modelos/IntentoTest');
 const Recordatorio = require('../modelos/Recordatorios');
 const Usuario = require('../modelos/Usuario');
 
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const contraseñaPlana = '123456';
 const saltRounds = 10;

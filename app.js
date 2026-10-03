@@ -14,27 +14,21 @@ var cookieParser = require('cookie-parser');
 const Recordatorio = require('./modelos/Recordatorios');
 const enviarRecordatorio=require("./servicios/enviarRecordatorio");
 const requireAuth = require('./middleware/filtroAuteticacion');
-
-enviarRecordatorio("test@email.com", "Asunto de prueba", "Mensaje de prueba");
+const { DateTime } = require('luxon')
 
 // Función que envía y elimina los recordatorios
 async function enviarRecordatorios() {
   try {
-    // Obtener la fecha y hora actuales en la zona horaria local
-    const ahora = new Date();
-    const offsetHoras = ahora.getTimezoneOffset() / -60; // Ajuste de zona horaria
+    // Date de JS en el minuto UTC actual. Un string con año de dos cifras
+    // ('yy-MM-dd…') no es una fecha válida para Sequelize y MySQL recibe 'Invalid date'.
+    const ahoraUtc = DateTime.utc().startOf('minute').toJSDate();
 
-    // Sumar 2 horas adicionales
-    ahora.setHours(ahora.getHours() + offsetHoras + 2); // Aplica la diferencia horaria y suma 2 horas
-
-    const fechaHoraActualLocal = ahora.toISOString().slice(0, 16) + ":00"; // Formato YYYY-MM-DD HH:mm:00
-
-    console.log("Buscando recordatorios para:", fechaHoraActualLocal);
+    console.log("Buscando recordatorios para:", ahoraUtc.toISOString());
 
     // Buscar los recordatorios con la fecha y hora exacta
     const recordatorios = await Recordatorio.findAll({
       where: {
-        fecha: fechaHoraActualLocal
+        fecha: ahoraUtc
       }
     });
 
@@ -56,19 +50,14 @@ async function enviarRecordatorios() {
   }
 }
 
-if (process.env.NODE_ENV !== 'test') {
-  setInterval(enviarRecordatorios, 10 * 1000);
-  enviarRecordatorio("test@email.com", "Asunto de prueba", "Mensaje de prueba");
-}
-
 const app = express();
 const session = require('express-session'); 
 
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const Usuario = require('./modelos/Usuario');
 
 app.use(session({
-  secret: 'mi_clave_secreta',  
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: { secure: false }    
@@ -91,6 +80,10 @@ app.use(cookieParser());
 
 // sirve para que en tiempo de ejecución el servidor sepa acceder a la carpeta public para imagenes, etc
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
 
 // Cuando no se pone ninguna ruta, se redirige automaticamente al inicio de sesión, actuando como página principal.
 app.get('/', async (req, res) => {
@@ -368,7 +361,7 @@ app.get('/establecer-recordatorio', requireAuth, (req, res) => {
 
 
 app.post('/crear-recordatorio', requireAuth, (req, res) => {
-  const { fecha, email, mensaje, asunto, time } = req.body;
+  const { fecha, email, mensaje, asunto, time, client_timezone } = req.body;
 
   // Mostrar los datos recibidos para verificar
   console.log(fecha);
@@ -376,42 +369,38 @@ app.post('/crear-recordatorio', requireAuth, (req, res) => {
   console.log(email);
   console.log(mensaje);
   console.log(asunto);
+  console.log(client_timezone)
 
   // Validar que todos los campos estén completos
-  if (!fecha || !time || !email || !mensaje || !asunto) {
+  if (!fecha || !time || !email || !mensaje || !asunto || !client_timezone) {
     return res.render('establecer-recordatorio', {
       mensajeError: 'Todos los campos son obligatorios.',
       mensajeExito: null
     });
   }
-  const [hora, minutos] = time.split(":").map(Number);
-  const fechaPartes = fecha.split("-").map(Number);
 
-  let fechaHoraSeleccionada = new Date(
-    Date.UTC(fechaPartes[0], fechaPartes[1] - 1, fechaPartes[2], hora, minutos)
-  );
+  const fechaHoraSeleccionada = DateTime.fromFormat(`${fecha} ${time}`, 'yyyy-MM-dd HH:mm', { zone: client_timezone });
 
-  // Convertimos la fecha a la hora de Madrid
-  fechaHoraSeleccionada = new Date(
-    fechaHoraSeleccionada.toLocaleString("en-US", { timeZone: "Europe/Madrid" })
-  );
-
-  console.log("Fecha seleccionada en España:", fechaHoraSeleccionada);
-
-  // Obtener la fecha y hora actual
-  const fechaHoy = new Date(); // Obtiene la fecha y hora actual
+  if (!fechaHoraSeleccionada.isValid) {
+    return res.render('establecer-recordatorio', {
+      mensajeError: 'La fecha o la zona horaria no son válidas.',
+      mensajeExito: null
+    });
+  }
 
   // Validar que la fecha no sea del pasado
-  if (fechaHoraSeleccionada < fechaHoy) {
+  if (fechaHoraSeleccionada < DateTime.now()) {
     return res.render('establecer-recordatorio', {
       mensajeError: 'La fecha no puede ser del pasado.',
       mensajeExito: null
     });
   }
 
+  const fechaUtc = fechaHoraSeleccionada.toUTC().toJSDate();
+  console.log(fechaUtc.toISOString());
   // Crear el recordatorio en la base de datos
   Recordatorio.create({
-    fecha: fechaHoraSeleccionada, // Guardar la fecha y hora completa
+    fecha: fechaUtc, // Guardar la fecha y hora completa
     email,
     mensaje,
     asunto
@@ -432,6 +421,10 @@ app.post('/crear-recordatorio', requireAuth, (req, res) => {
       });
     });
 });
+
+if (process.env.NODE_ENV !== 'test') {
+  setInterval(enviarRecordatorios, 10 * 1000);
+}
 
 // Añadimos el manejador de errores/excepciones
 app.use(manejadorErrores);

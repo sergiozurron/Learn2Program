@@ -2,7 +2,7 @@ process.env.NODE_ENV = 'test';
 const request = require('supertest');
 const app = require('../app');
 const Usuario = require('../modelos/Usuario');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 jest.mock('../modelos/Usuario');
 
