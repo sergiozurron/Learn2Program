@@ -50,7 +50,7 @@ jobs:
       DB_PORT: 3306
       DB_USER: root
       DB_PASSWORD: root
-      DB_NAME: learn2program_test
+      DB_NAME: learn2program
       DB_DIALECT: mysql
       SESSION_SECRET: test-secret
 
