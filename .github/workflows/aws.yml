@@ -34,7 +34,7 @@ jobs:
         image: mysql:8.0
         env:
           MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: learn2program_test
+          MYSQL_DATABASE: learn2code
         ports:
           - 3306:3306
         options: >-
