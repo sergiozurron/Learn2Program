@@ -18,11 +18,11 @@ const saltRounds = 10;
 // Función que puebla la base de datos
 async function seedDatabase() {
     try {
-        // Si no estamos en la fase de desarrollo poblamos la BD
         const enDesarrollo = (process.env.NODE_ENV || "development") === "development";
+        const enTest = process.env.NODE_ENV === "test";
 
         // Sincroniza la BD con el modelo
-        await sequelize.sync({ force: enDesarrollo, logging: false }); // {force: true} borra y crea las tablas de nuevo (en producción no poblamos)
+        await sequelize.sync({ force: enDesarrollo || enTest, logging: false }); // {force: true} borra y crea las tablas de nuevo (en producción no poblamos)
         if (!enDesarrollo)
             return;
         // Crea un curso junto a sus temas, test, preguntas, y respuestas
