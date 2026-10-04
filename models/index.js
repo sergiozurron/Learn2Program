@@ -2,7 +2,7 @@
 
 const Sequelize = require('sequelize');
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.json')[env];
+const config = require(__dirname + '/../config/config.js')[env];
 
 // Model files call sequelize.define themselves and require this module.
 // Do not load them here; the sequelize-cli factory loop crashes startup.
