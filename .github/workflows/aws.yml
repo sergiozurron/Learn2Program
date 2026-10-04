@@ -124,7 +124,7 @@ jobs:
         run: |
           CNAME=$(aws elasticbeanstalk describe-environments \
             --application-name learn2program \
-            --environment-names learn2program-prod \
+            --environment-names Learn2program-env \
             --query 'Environments[0].CNAME' \
             --output text)
 
