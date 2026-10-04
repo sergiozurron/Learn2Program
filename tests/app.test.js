@@ -3,10 +3,10 @@ const request = require('supertest');
 const { StatusCodes } = require('http-status-codes');
 const MENSAJES = require('../utils/mensajes');
 const bcrypt = require('bcryptjs');
-const Usuario = require('../modelos/Usuario');
-const Pregunta = require('../modelos/Pregunta');
-const IntentoTest = require('../modelos/IntentoTest');
-const IntentoPregunta = require('../modelos/IntentoPregunta');
+const Usuario = require('../models/Usuario');
+const Pregunta = require('../models/Pregunta');
+const IntentoTest = require('../models/IntentoTest');
+const IntentoPregunta = require('../models/IntentoPregunta');
 
 beforeAll((done) => {
     server = app.listen(0, () => { // Usamos 0 para que el SO asigne un puerto libre
@@ -438,7 +438,7 @@ describe("POST /register", () => {
 
         // Creamos el usuario previamente (directamente en la BD con hash)
         const bcrypt = require('bcryptjs');
-        const Usuario = require('../modelos/Usuario');
+        const Usuario = require('../models/Usuario');
         const contraseñaHasheada = await bcrypt.hash('Password123', 10); 
 
         await Usuario.findOrCreate({
@@ -500,26 +500,13 @@ describe("POST /register", () => {
 });
 
 describe('Prueba de integración: Login', () => {
-    // Limpiar la base de datos después de cada prueba
-    afterEach(async () => {
-        await Usuario.destroy({ where: {} });
-    });
-
-    beforeEach(async () => {
-        // Crear un usuario de prueba con contraseña hasheada
-        const hashedPassword = await bcrypt.hash('123', 10);
-        await Usuario.create({
-            correo: 'usuario@example.com',
-            contraseña: hashedPassword  // Cambiado de password a contraseña
-        });
-    });
 
     it('Debería iniciar sesión correctamente con credenciales válidas', async () => {
         const response = await request(app)
             .post('/login')
             .send({
                 correo: 'usuario@example.com',
-                password: '123'  // Cambiado de contraseña a password
+                password: '123456'  // Cambiado de contraseña a password
             });
 
         expect(response.statusCode).toBe(200);
@@ -536,6 +523,6 @@ describe('Prueba de integración: Login', () => {
             });
 
         expect(response.statusCode).toBe(400);
-        expect(response.body).toHaveProperty('message_error', '¡No hay ninguna cuenta con este correo!');
+        expect(response.body).toHaveProperty('message_error', 'Usuario o contraseña incorrectos');
     });
 });

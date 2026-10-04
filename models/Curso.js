@@ -1,10 +1,10 @@
 const DataTypes = require('sequelize');
-const sequelize = require('../database/connection');
+const db = require('./index')
 const Tema = require('./Tema');
 const Test = require('./Test');
 const Logro = require('./Logro');
 
-const Curso = sequelize.define("Curso", {
+const Curso = db.sequelize.define("Curso", {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,

@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../database/connection');
+const db = require('./index')
 
-const Logro = sequelize.define("Logro", {
+const Logro = db.sequelize.define("Logro", {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,

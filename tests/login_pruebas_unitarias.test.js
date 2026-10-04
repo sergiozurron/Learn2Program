@@ -1,10 +1,10 @@
 process.env.NODE_ENV = 'test';
 const request = require('supertest');
 const app = require('../app');
-const Usuario = require('../modelos/Usuario');
+const Usuario = require('../models/Usuario');
 const bcrypt = require('bcryptjs');
 
-jest.mock('../modelos/Usuario');
+jest.mock('../models/Usuario');
 
 describe('POST /login', () => {
   afterEach(() => {
@@ -37,7 +37,7 @@ describe('POST /login', () => {
       .send({ correo: 'noexiste@correo.com', password: '123456' });
 
     expect(response.statusCode).toBe(400);
-    expect(response.body.message_error).toBe('¡No hay ninguna cuenta con este correo!');
+    expect(response.body.message_error).toBe('Usuario o contraseña incorrectos');
   });
 
   it('debe fallar si la contraseña es incorrecta', async () => {
@@ -54,7 +54,7 @@ describe('POST /login', () => {
       .send({ correo: 'test@correo.com', password: 'incorrecta' });
 
     expect(response.statusCode).toBe(400);
-    expect(response.body.message_error).toBe('Contraseña incorrecta');
+    expect(response.body.message_error).toBe('Usuario o contraseña incorrectos');
   });
 });
 

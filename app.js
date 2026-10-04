@@ -4,14 +4,13 @@ const express = require('express');
 const path = require('path');
 const servicioIntento = require('./servicios/servicioIntento');
 const servicioLogro = require('./servicios/servicioLogro');
-const Curso = require('./modelos/Curso');
-const Tema = require('./modelos/Tema');
-const LogroUsuario = require('./modelos/LogroUsuario');
+const Curso = require('./models/Curso');
+const Tema = require('./models/Tema');
+const LogroUsuario = require('./models/LogroUsuario');
 const manejadorErrores = require('./middleware/manejadorErrores');
-const seedDatabase = require('./database/seed');
 const moment = require('moment');  
 var cookieParser = require('cookie-parser');
-const Recordatorio = require('./modelos/Recordatorios');
+const Recordatorio = require('./models/Recordatorios');
 const enviarRecordatorio=require("./servicios/enviarRecordatorio");
 const requireAuth = require('./middleware/filtroAuteticacion');
 const { DateTime } = require('luxon')
@@ -54,7 +53,7 @@ const app = express();
 const session = require('express-session'); 
 
 const bcrypt = require('bcryptjs');
-const Usuario = require('./modelos/Usuario');
+const Usuario = require('./models/Usuario');
 
 app.use(session({
   secret: process.env.SESSION_SECRET,
@@ -120,13 +119,13 @@ app.post('/login', async (req, res) => {
     const user = await Usuario.findOne({ where: { correo: correo } });
 
     if (!user) {
-      return res.status(400).json({ message_error: '¡No hay ninguna cuenta con este correo!' });
+      return res.status(400).json({ message_error: 'Usuario o contraseña incorrectos' });
     }
 
     // Comparamos las contraseñas
     const isMatch = await bcrypt.compare(password, user.contraseña); 
     if (!isMatch) {
-      return res.status(400).json({ message_error: 'Contraseña incorrecta' });
+      return res.status(400).json({ message_error: 'Usuario o contraseña incorrectos' });
     }
 
     // Guardar la información del usuario en la sesión
@@ -428,9 +427,6 @@ if (process.env.NODE_ENV !== 'test') {
 
 // Añadimos el manejador de errores/excepciones
 app.use(manejadorErrores);
-
-// Poblamos y sincronizamos la base de datos con el modelo
-seedDatabase();
 
 module.exports = app;
 

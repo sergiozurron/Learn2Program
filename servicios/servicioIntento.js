@@ -1,9 +1,9 @@
-const Curso = require("../modelos/Curso");
-const Pregunta = require("../modelos/Pregunta");
-const Respuesta = require("../modelos/Respuesta");
-const Test = require("../modelos/Test");
-const IntentoTest = require("../modelos/IntentoTest");
-const IntentoPregunta = require("../modelos/IntentoPregunta");
+const Curso = require("../models/Curso");
+const Pregunta = require("../models/Pregunta");
+const Respuesta = require("../models/Respuesta");
+const Test = require("../models/Test");
+const IntentoTest = require("../models/IntentoTest");
+const IntentoPregunta = require("../models/IntentoPregunta");
 const {
     PreguntaYaIntentadaError,
     CursoNoEncontradoError,

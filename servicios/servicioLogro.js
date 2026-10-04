@@ -1,7 +1,7 @@
-const Curso = require("../modelos/Curso");
-const Logro = require("../modelos/Logro");
-const Test = require("../modelos/Test");
-const IntentoTest = require("../modelos/IntentoTest");
+const Curso = require("../models/Curso");
+const Logro = require("../models/Logro");
+const Test = require("../models/Test");
+const IntentoTest = require("../models/IntentoTest");
 const moment = require("moment");
 
 const {

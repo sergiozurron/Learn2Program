@@ -1,10 +1,10 @@
 const servicioIntento = require('../servicios/servicioIntento');
-const Curso = require('../modelos/Curso');
-const Test = require('../modelos/Test');
-const Pregunta = require('../modelos/Pregunta');
-const Respuesta = require('../modelos/Respuesta');
-const IntentoTest = require('../modelos/IntentoTest');
-const IntentoPregunta = require('../modelos/IntentoPregunta');
+const Curso = require('../models/Curso');
+const Test = require('../models/Test');
+const Pregunta = require('../models/Pregunta');
+const Respuesta = require('../models/Respuesta');
+const IntentoTest = require('../models/IntentoTest');
+const IntentoPregunta = require('../models/IntentoPregunta');
 const { 
     IntentoTestTerminadoError, 
     RespuestaNoEncontradaError, 
@@ -17,23 +17,23 @@ const {
     PreguntaYaIntentadaError 
 } = require('../utils/errores'); // TODO seguro que sobra alguno de estos errores
 
-jest.mock("../modelos/Curso", () => ({
+jest.mock("../models/Curso", () => ({
     findByPk: jest.fn()
 }));
 
-jest.mock("../modelos/Test", () => ({
+jest.mock("../models/Test", () => ({
     findByPk: jest.fn() // Indicamos que la llamada a findByPk debe ser similada
 }));
 
-jest.mock("../modelos/Respuesta", () => ({
+jest.mock("../models/Respuesta", () => ({
     findByPk: jest.fn()
 }));
 
-jest.mock("../modelos/Pregunta", () => ({
+jest.mock("../models/Pregunta", () => ({
     findOne: jest.fn()
 }));
 
-jest.mock("../modelos/IntentoTest", () => ({
+jest.mock("../models/IntentoTest", () => ({
     create: jest.fn(), // La llamada a create será simulada
     findByPk: jest.fn(),
     findOne: jest.fn(),
@@ -41,7 +41,7 @@ jest.mock("../modelos/IntentoTest", () => ({
     destroy: jest.fn()
 }));
 
-jest.mock("../modelos/IntentoPregunta", () => ({
+jest.mock("../models/IntentoPregunta", () => ({
     findOne: jest.fn(),
     create: jest.fn(),
     save: jest.fn(),
