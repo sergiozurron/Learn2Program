@@ -6,6 +6,8 @@ Interactive web platform that teaches programming languages in a fun, progressiv
 
 Developed as an academic project for the course *Gestión de Proyectos Software y Metodologías de Desarrollo* (2024-2025) by the team **Agile Masters**.
 
+**App:** https://learn2program.sergiozurron.site/
+
 ## About the Project
 
 Learn2Program is a gamified learning platform that helps beginners (and not-so-beginners) learn programming through short, interactive lessons.
