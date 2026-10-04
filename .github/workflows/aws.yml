@@ -17,7 +17,7 @@ concurrency:
 
 env:
   NODE_VERSION: "22"
-  AWS_REGION: "eu-west-1"
+  AWS_REGION: "eu-north-1"
   APPLICATION_NAME: "learn2program"
   ENVIRONMENT_NAME: "learn2program-prod"
 
@@ -90,41 +90,43 @@ jobs:
 
     permissions:
       contents: read
-      id-token: write
 
     steps:
       - name: Checkout
         uses: actions/checkout@v7
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          cache: npm
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v6.3.0
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-          aws-region: ${{ env.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-north-1
 
       - name: Deploy to Elastic Beanstalk
         uses: aws-actions/aws-elasticbeanstalk-deploy@v1
         with:
-          aws-region: ${{ env.AWS_REGION }}
-          application-name: ${{ env.APPLICATION_NAME }}
-          environment-name: ${{ env.ENVIRONMENT_NAME }}
+          aws-region: eu-north-1
+          application-name: learn2program
+          environment-name: Learn2program-env
           version-label: ${{ github.sha }}
+          create-application-if-not-exists: false
+          create-environment-if-not-exists: false
           wait-for-deployment: true
           wait-for-environment-recovery: true
 
       - name: Smoke test
         run: |
           CNAME=$(aws elasticbeanstalk describe-environments \
-            --application-name "${APPLICATION_NAME}" \
-            --environment-names "${ENVIRONMENT_NAME}" \
+            --application-name learn2program \
+            --environment-names learn2program-prod \
             --query 'Environments[0].CNAME' \
             --output text)
 
-          echo "Environment: http://${CNAME}"
-
-          curl \
-            --fail \
-            --retry 10 \
-            --retry-delay 5 \
-            --retry-connrefused \
+          curl --fail --retry 10 --retry-delay 5 \
             "http://${CNAME}/health"
