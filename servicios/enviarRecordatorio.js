@@ -7,10 +7,12 @@ async function enviarRecordatorio(email, asunto, mensaje) {
     });
 
     const resultado = await mailtrap.send({
-        from: { name: "Mailtrap Test", email: "noreply@sergiozurron.site" },
+        from: { name: "Learn2Program", email: "noreply@sergiozurron.site" },
         to: [{ email: email }],
-        subject: asunto,
-        text: mensaje,
+        template_uuid: process.env.MAILTRAP_REMINDER_TEMPLATE_ID,
+        template_variables: {
+            "continue_url": process.env.URL + "/ver-teoria-curso"
+        }
     });
 
     console.log(resultado);
