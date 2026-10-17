@@ -7,7 +7,13 @@ function databaseConfig() {
     database: process.env.DB_NAME ?? 'learn2code',
     host: process.env.DB_HOST ?? '127.0.0.1',
     port: Number(process.env.DB_PORT) || 3306,
-    dialect: process.env.DB_DIALECT || 'mysql'
+    dialect: process.env.DB_DIALECT || 'mysql',
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    }
   };
 }
 
